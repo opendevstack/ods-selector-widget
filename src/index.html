@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <title>Stencil Component Starter</title>
+
+    <link rel="stylesheet" href="/build/ods-selector-widget.css" />
+    <link rel="stylesheet" href="/global.css" />
+    <script type="module" src="/build/ods-selector-widget.esm.js"></script>
+    <script nomodule src="/build/ods-selector-widget.js"></script>
+  </head>
+  <body>
+    <ods-selector-widget></ods-selector-widget>
+    <script>
+      const odsSelectorWidget = document.querySelector('ods-selector-widget');
+      odsSelectorWidget.project = 'PROJECT';
+      odsSelectorWidget.serviceUrl = 'https://your-api-url/v1/${project}/platforms';
+    </script>
+  </body>
+</html>
