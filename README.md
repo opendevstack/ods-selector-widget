@@ -134,6 +134,22 @@ declare namespace JSX {
 }
 ```
 
+
+#### Configure React + Vite (if needed)
+
+> **Note:** If you encounter the error `No loader is configured for ".map" files` in a React + Vite project, update your `vite.config.js` or `vite.config.ts` to exclude `.map` files from dependency optimization.
+
+Add the following to your Vite config:
+
+```js
+// vite.config.js or vite.config.ts
+export default {
+  optimizeDeps: {
+    exclude: ['*.map']
+  }
+}
+```
+
 ## Properties
 
 | Property | Attribute | Type | Default | Description |
