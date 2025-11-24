@@ -1,19 +1,12 @@
 # ODS Selector Widget
 
-[![Built With Stencil](https://img.shields.io/badge/-Built%20With%20Stencil-16161d.svg?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjIuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI%2BCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI%2BCgkuc3Qwe2ZpbGw6I0ZGRkZGRjt9Cjwvc3R5bGU%2BCjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik00MjQuNywzNzMuOWMwLDM3LjYtNTUuMSw2OC42LTkyLjcsNjguNkgxODAuNGMtMzcuOSwwLTkyLjctMzAuNy05Mi43LTY4LjZ2LTMuNmgzMzYuOVYzNzMuOXoiLz4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTQyNC43LDI5Mi4xSDE4MC40Yy0zNy42LDAtOTIuNy0zMS05Mi43LTY4LjZ2LTMuNkgzMzJjMzcuNiwwLDkyLjcsMzEsOTIuNyw2OC42VjI5Mi4xeiIvPgo8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNDI0LjcsMTQxLjdIODcuN3YtMy42YzAtMzcuNiw1NC44LTY4LjYsOTIuNy02OC42SDMzMmMzNy45LDAsOTIuNywzMC43LDkyLjcsNjguNlYxNDEuN3oiLz4KPC9zdmc%2BCg%3D%3D&colorA=16161d&style=flat-square)](https://stenciljs.com)
-[![npm version](https://img.shields.io/npm/v/@appshell/ods-selector-widget.svg)](https://www.npmjs.com/package/@appshell/ods-selector-widget)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-
 A flexible and customizable web component for displaying platform navigation and resource links. Built with [Stencil](https://stenciljs.com/), this component provides a clean interface for organizing and accessing multiple platform resources in a project-based context.
 
 ## Features
 
 - 🎨 **Fully Customizable**: Extensive CSS custom properties for theming
-- 🔌 **Framework Agnostic**: Works with any JavaScript framework or vanilla JS
-- 📱 **Responsive**: Adapts to different screen sizes
-- ⚡ **Fast**: Lazy-loaded, optimized for performance
+- 🔌 **Framework Agnostic**: Works both with Angular and React
 - 🔄 **Dynamic Content**: Fetches platform data from a service URL
-- 🎯 **Accessibility**: ARIA attributes and semantic HTML
 - 🦴 **Loading States**: Built-in skeleton loader and error handling
 - 🔗 **Platform Selector**: Dedicated platform icons with enable/disable states
 - 📑 **Sectioned Layout**: Organize links into logical sections with tooltips
@@ -37,7 +30,7 @@ A flexible and customizable web component for displaying platform navigation and
 ### NPM
 
 ```bash
-npm install @appshell/ods-selector-widget
+npm install @opendevstack/ods-selector-widget
 ```
 
 ## Usage
@@ -45,13 +38,16 @@ npm install @appshell/ods-selector-widget
 ### Angular
 
 #### 1. Import the Component
+#### 1. Import the Component
+
+**For Angular with NgModule (traditional setup):**
 
 In your `app.module.ts`:
 
 ```typescript
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { defineCustomElements } from '@appshell/ods-selector-widget/loader';
+import { defineCustomElements } from '@opendevstack/ods-selector-widget/loader';
 
 import { AppComponent } from './app.component';
 
@@ -66,6 +62,40 @@ defineCustomElements(window);
 })
 export class AppModule { }
 ```
+
+**For Angular with Standalone Components:**
+
+In your `main.ts`:
+
+```typescript
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { defineCustomElements } from '@opendevstack/ods-selector-widget/loader';
+
+defineCustomElements(window);
+
+bootstrapApplication(AppComponent, {
+  providers: []
+});
+```
+
+In your `app.component.ts`:
+
+```typescript
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  // Component logic
+}
+```
+
 #### 2. Configure Angular (if needed)
 
 > **Note:** If you encounter the error `✘ [ERROR] No loader is configured for ".map" files`, you need to update your `angular.json` configuration.
@@ -101,7 +131,7 @@ Add the following to your `architect.build.options` in `angular.json`:
 
 ```tsx
 import React from 'react';
-import { defineCustomElements } from '@appshell/ods-selector-widget/loader';
+import { defineCustomElements } from '@opendevstack/ods-selector-widget/loader';
 
 // Call this once in your app initialization
 defineCustomElements(window);
@@ -154,14 +184,14 @@ export default {
 
 | Property | Attribute | Type | Default | Description |
 |----------|-----------|------|---------|-------------|
-| `project` | `project` | `string` | `'PROJECT 1'` | The project name displayed in the widget header |
+| `project` | `project` | `string` | `undefined` | The project name displayed in the widget header |
 | `serviceUrl` | `service-url` | `string` | `undefined` | The service URL to fetch platform data. Use `${project}` as a placeholder that will be replaced with the project name |
 
 ### Example
 
 ```html
 <ods-selector-widget
-  project="Customer Portal"
+  project="PROJECT1"
   service-url="https://api.myapp.com/platforms/${project}">
 </ods-selector-widget>
 ```
@@ -244,7 +274,7 @@ The component expects the service URL to return JSON data in the following forma
     - `type` (`string`): Link type - `"platform"`, `"project"`, or `"external"`
       - `"platform"`: Renders as platform selector icons (when all links in a section are platform type)
       - `"project"`: Renders as list item with internal link arrow icon
-      - `"external"`: Renders as list item with external link arrow icon
+      - `"external"`: Renders as list item with external link squared arrow icon
     - `tooltip` (`string`, optional): Tooltip text for the link (shown on hover for non-platform links)
     - `abbreviation` (`string`, optional): Short text shown in platform icon (required for `type: "platform"`)
     - `disabled` (`boolean`, optional): If `true`, the platform link is disabled and shown as non-clickable (only applicable for `type: "platform"`)
@@ -255,7 +285,7 @@ The component automatically adapts its rendering based on the link types within 
 
 - **Platform Section**: If **all** links in a section have `type: "platform"`, they are rendered as clickable platform icons in a horizontal layout. This is typically used for the main platform selector section.
 
-- **Link List Section**: If a section contains any non-platform links (`type: "project"` or `type: "external"`), all links in that section are rendered as a vertical list with appropriate arrow icons.
+- **Link List Section**: If a section contains any non-platform links (`type: "project"` or `type: "external"`), all links in that section are rendered as a vertical list with appropriate arrow icons split in two columns.
 
 **Example:**
 
@@ -272,7 +302,7 @@ The component automatically adapts its rendering based on the link types within 
   ]
 }
 ```
-↓ Renders as platform icons
+The example above renders as platform icons
 
 ```json
 {
@@ -287,7 +317,7 @@ The component automatically adapts its rendering based on the link types within 
   ]
 }
 ```
-↓ Renders as a list with arrow icons
+The example above renders as a list with arrow/squared arrow icons.
 
 ## Styling
 
@@ -375,7 +405,7 @@ ods-selector-widget {
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/ods-selector-widget.git
+git clone https://github.com/opendevstack/ods-selector-widget.git
 cd ods-selector-widget
 
 # Install dependencies
@@ -466,13 +496,13 @@ Contributions are welcome! Please follow these guidelines:
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License - see the [LICENSE](LICENSE) file for details.
 
 ## Support
 
 If you encounter any issues or have questions:
 
-- Open an issue on [GitHub Issues](https://github.com/yourusername/ods-selector-widget/issues)
+- Open an issue on [GitHub Issues](https://github.com/opendevstack/ods-selector-widget/issues)
 - Check the [Stencil documentation](https://stenciljs.com/docs/introduction)
 
 ## Acknowledgments
