@@ -118,7 +118,7 @@ describe('ods-selector-widget', () => {
                     </span>
                   </div>
                 </div>
-                <div class="platform-icons">
+                <div class="cols-3 platform-icons">
                   <a class="platform-selector" href="https://platform1.com" rel="noopener noreferrer" target="_self">
                     <div class="icon">
                       P1
@@ -803,6 +803,77 @@ describe('ods-selector-widget', () => {
 
     // Should have no sections
     expect(page.root.shadowRoot.querySelector('.section')).toBeNull();
+  });
+
+  describe('platform icons column layout', () => {
+    const makeLinks = (count: number) =>
+      Array.from({ length: count }, (_, i) => ({
+        label: `Platform ${i + 1}`,
+        url: `https://platform${i + 1}.com`,
+        abbreviation: `P${i + 1}`,
+        type: 'platform',
+      }));
+
+    it.each([
+      [3, 'cols-3'],
+      [4, 'cols-4'],
+      [5, 'cols-3'],
+      [6, 'cols-3'],
+      [7, 'cols-4'],
+      [8, 'cols-4'],
+    ])('%i platforms should render with %s class on the platform-icons container', async (count: number, expectedClass: string) => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({ sections: [{ section: 'Platforms', tooltip: '', links: makeLinks(count) }] }),
+        })
+      ) as jest.Mock;
+
+      const page = await newSpecPage({
+        components: [OdsSelectorWidget],
+        html: '<ods-selector-widget service-url="https://api.example.com/platforms/${project}"></ods-selector-widget>',
+      });
+
+      await page.waitForChanges();
+
+      const platformIcons = page.root.shadowRoot.querySelector('.platform-icons');
+      expect(platformIcons).toBeTruthy();
+      expect(platformIcons.classList.contains(expectedClass)).toBe(true);
+    });
+
+    it('should return cols-3 from getPlatformColumns for counts 3, 5, 6', () => {
+      const instance = new OdsSelectorWidget();
+      expect(instance.getPlatformColumns(3)).toBe(3);
+      expect(instance.getPlatformColumns(5)).toBe(3);
+      expect(instance.getPlatformColumns(6)).toBe(3);
+    });
+
+    it('should return cols-4 from getPlatformColumns for counts 4, 7, 8', () => {
+      const instance = new OdsSelectorWidget();
+      expect(instance.getPlatformColumns(4)).toBe(4);
+      expect(instance.getPlatformColumns(7)).toBe(4);
+      expect(instance.getPlatformColumns(8)).toBe(4);
+    });
+
+    it('should not apply both cols-3 and cols-4 classes at the same time', async () => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({ sections: [{ section: 'Platforms', tooltip: '', links: makeLinks(4) }] }),
+        })
+      ) as jest.Mock;
+
+      const page = await newSpecPage({
+        components: [OdsSelectorWidget],
+        html: '<ods-selector-widget service-url="https://api.example.com/platforms/${project}"></ods-selector-widget>',
+      });
+
+      await page.waitForChanges();
+
+      const platformIcons = page.root.shadowRoot.querySelector('.platform-icons');
+      expect(platformIcons.classList.contains('cols-4')).toBe(true);
+      expect(platformIcons.classList.contains('cols-3')).toBe(false);
+    });
   });
 
   it('should not display sections when sections is undefined/null', async () => {
