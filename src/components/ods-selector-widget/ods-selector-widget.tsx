@@ -114,6 +114,12 @@ export class OdsSelectorWidget {
     }
   }
 
+  getPlatformColumns(count: number): number {
+    const waste3 = count % 3 === 0 ? 0 : 3 - (count % 3);
+    const waste4 = count % 4 === 0 ? 0 : 4 - (count % 4);
+    return waste3 <= waste4 ? 3 : 4;
+  }
+
   render() {
     const arrowSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.0666 7.71332L8.43596 3.20065L8.89729 2.71332L13.3333 6.97998V9.11332L8.89729 13.38L8.43596 12.8926L13.0666 8.37998H2.66663V7.71332H13.0666Z" fill="#191919" /></svg>`;
     const squareArrowSvg = `<?xml version="1.0" encoding="UTF-8"?><svg id="Canvas" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 24 24"><path d="M20.9985977,4.9995999l-1.9966812-1.9995999h-4.9903059v.9998h5.288516l-7.6509237,7.6434295.7093315.7098799,7.6409311-7.6434903.0021935,5.288981h.9983406l-.0014019-4.9990001ZM17.9741436,18.4741383c0,.8269825-.700983,1.526062-1.5316353,1.526062l-10.9466553-.0019531c-.8257766,0-1.4975119-.6727161-1.4975119-1.4997005V7.5427313c0-.8323531.6853848-1.5358257,1.4975119-1.5358257l5.5298748.0009766v-.9998002l-5.5298743-.0009766c-1.3766189,0-2.4958532,1.1374679-2.4958532,2.5356255v10.9558158c0,1.3786297,1.1192343,2.4995003,2.4958532,2.4995003l10.9466548.0019531c1.3717442,0,2.5299759-1.1569958,2.5299759-2.5229321l.0341225-5.4949942-.9983406-.0058584-.0341225,5.4979229Z"/></svg>`;
@@ -199,7 +205,7 @@ export class OdsSelectorWidget {
                 )}
               </div>
               {section.links.every(link => link.type === 'platform') ? (
-                <div class="platform-icons">
+                <div class={`platform-icons cols-${this.getPlatformColumns(section.links.length)}`}>
                   {section.links.map(link => (
                       link.disabled ? (
                         <div class="platform-selector disabled" aria-disabled="true">

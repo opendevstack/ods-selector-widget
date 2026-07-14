@@ -158,16 +158,52 @@
     }
 
     .platform-icons {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
+      display: grid;
       margin: 1rem 0;
+
+      &.cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+
+        .platform-selector:nth-child(3n+1) .icon {
+          background: var(--ods-selector-widget-first-platform-bg);
+          color: var(--ods-selector-widget-first-platform-text);
+        }
+
+        .platform-selector:nth-child(3n+2) .icon {
+          background: var(--ods-selector-widget-second-platform-bg);
+          color: var(--ods-selector-widget-second-platform-text);
+        }
+
+        .platform-selector:nth-child(3n) .icon {
+          background: var(--ods-selector-widget-third-platform-bg);
+          color: var(--ods-selector-widget-third-platform-text);
+        }
+      }
+
+      &.cols-4 {
+        grid-template-columns: repeat(4, 1fr);
+
+        .platform-selector:nth-child(4n+1) .icon {
+          background: var(--ods-selector-widget-first-platform-bg);
+          color: var(--ods-selector-widget-first-platform-text);
+        }
+
+        .platform-selector:nth-child(4n+2) .icon,
+        .platform-selector:nth-child(4n+3) .icon {
+          background: var(--ods-selector-widget-second-platform-bg);
+          color: var(--ods-selector-widget-second-platform-text);
+        }
+
+        .platform-selector:nth-child(4n) .icon {
+          background: var(--ods-selector-widget-third-platform-bg);
+          color: var(--ods-selector-widget-third-platform-text);
+        }
+      }
 
       .platform-selector {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 25%; /* Because there are 4 items */
         gap: 0.3rem;
         text-decoration: none;
         color: var(--ods-selector-widget-color-primary);
@@ -208,21 +244,6 @@
           font-style: normal;
           font-weight: 400;
           line-height: 0.75rem;
-        }
-
-        &:nth-child(1) .icon {
-          background: var(--ods-selector-widget-first-platform-bg);
-          color: var(--ods-selector-widget-first-platform-text);
-        }
-
-        &:nth-child(2) .icon {
-          background: var(--ods-selector-widget-second-platform-bg);
-          color: var(--ods-selector-widget-second-platform-text);
-        }
-
-        &:nth-child(3) .icon {
-          background: var(--ods-selector-widget-third-platform-bg);
-          color: var(--ods-selector-widget-third-platform-text);
         }
 
         .text {
