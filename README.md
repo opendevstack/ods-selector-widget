@@ -38,7 +38,6 @@ npm install @opendevstack/ods-selector-widget
 ### Angular
 
 #### 1. Import the Component
-#### 1. Import the Component
 
 **For Angular with NgModule (traditional setup):**
 
@@ -129,8 +128,9 @@ Add the following to your `architect.build.options` in `angular.json`:
 
 ### React
 
+The following code demonstrates how to integrate the ODS Selector Widget into a React application with TypeScript.
+
 ```tsx
-import React from 'react';
 import { defineCustomElements } from '@opendevstack/ods-selector-widget/loader';
 
 // Call this once in your app initialization
@@ -149,17 +149,26 @@ function App() {
 
 export default App;
 ```
+**Key Points:**
 
-For better TypeScript support in React:
+- **`defineCustomElements(window)`**: Registers the custom web component with the browser. This must be called **once** before rendering any `<ods-selector-widget>` elements.
+- **`project` attribute**: Sets the project name for the widget.
+- **`service-url` attribute**: Defines the API endpoint. Use `${project}` as a template variable that gets replaced with the project name.
+
+### For better TypeScript support in React:
+
+To enable TypeScript support for the custom element, add this to your type declarations file:
 
 ```tsx
 // Add to your declarations file (e.g., custom-elements.d.ts)
-declare namespace JSX {
-  interface IntrinsicElements {
-    'ods-selector-widget': {
-      project?: string;
-      'service-url'?: string;
-    };
+declare module 'react' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'ods-selector-widget': {
+        project?: string;
+        'service-url'?: string;
+      };
+    }
   }
 }
 ```

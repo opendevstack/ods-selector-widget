@@ -158,16 +158,21 @@
     }
 
     .platform-icons {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
+      display: grid;
       margin: 1rem 0;
+
+      &.cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      &.cols-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
 
       .platform-selector {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 25%; /* Because there are 4 items */
         gap: 0.3rem;
         text-decoration: none;
         color: var(--ods-selector-widget-color-primary);
