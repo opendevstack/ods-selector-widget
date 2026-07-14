@@ -1,6 +1,6 @@
 {
   "name": "@opendevstack/ods-selector-widget",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A flexible and customizable web component for displaying platform navigation and resource links",
   "author": "OpenDevStack",
   "repository": {
