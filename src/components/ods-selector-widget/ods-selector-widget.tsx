@@ -134,7 +134,7 @@ export class OdsSelectorWidget {
             <div class="widget-content">
             <div class="skeleton-title"></div>
 
-            <div class="platform-icons">
+            <div class="platform-icons cols-4">
               {['platform-1', 'platform-2', 'platform-3', 'platform-4'].map((platform) => (
               <div class="platform-selector skeleton" key={platform}>
                 <div class="icon skeleton-circle"></div>
